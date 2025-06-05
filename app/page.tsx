@@ -1,5 +1,5 @@
 
-import StartPage from "@/components/startpage";
+import StartPage from "../components/startpage";
 
 
 

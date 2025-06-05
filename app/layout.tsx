@@ -1,10 +1,8 @@
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import Header from "@/components/header";
-import { Metadata, Viewport } from 'next'  // Use these types instead
-import SideBarMenu from "@/components/sidebarmenu";
-import InputBar from "@/components/inputbar";
-import StartPage from "@/components/startpage";
+import Header from "../components/header";
+import SideBarMenu from "../components/sidebarmenu";
+
 
 
 

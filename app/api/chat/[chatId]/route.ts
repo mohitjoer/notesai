@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import Chat from "./../../../../mongoDB/models/chat";
-import connectDB from "./../.././../../mongoDB/db";
 import { currentUser } from "@clerk/nextjs/server";
+import Chat from "@/mongoDB/models/chat";
+import connectDB from "@/mongoDB/db";
 
 // GET /api/chat/[chatId]
-export async function GET(
-  req: NextRequest,
-  context: { params: { chatId: string } }
-) {
+export async function GET(req: NextRequest, context: any) {
+  const { chatId } = context.params;
   try {
     const user = await currentUser();
     if (!user?.id) {
@@ -17,7 +15,7 @@ export async function GET(
     await connectDB();
 
     const chat = await Chat.findOne({
-      _id: context.params.chatId,
+      _id: chatId,
       "user.userId": user.id,
     });
 
@@ -33,10 +31,8 @@ export async function GET(
 }
 
 // PATCH /api/chat/[chatId]
-export async function PATCH(
-  req: NextRequest,
-  context: { params: { chatId: string } }
-) {
+export async function PATCH(req: NextRequest, context: any) {
+  const { chatId } = context.params;
   try {
     const user = await currentUser();
     if (!user?.id) {
@@ -51,7 +47,7 @@ export async function PATCH(
     await connectDB();
 
     const chat = await Chat.findOne({
-      _id: context.params.chatId,
+      _id: chatId,
       "user.userId": user.id,
     });
 

@@ -1,6 +1,9 @@
 import { createChat, getUserChats } from '../../../services/chat-service';
 import { currentUser } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import Chat from '@/mongoDB/models/chat';
+import connectDB from '@/mongoDB/db';
+
 
 export async function POST(req: Request) {
   try {

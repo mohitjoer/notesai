@@ -1,8 +1,8 @@
-import { getGroqChatCompletion } from "@/AI/groq";
+import { getGroqChatCompletion } from "../../AI/groq";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import Chat from "@/mongoDB/models/chat";
-import connectDB from "@/mongoDB/db";
+import Chat from "../../../mongoDB/models/chat";
+import connectDB from "../../../mongoDB/db";
 
 export async function POST(req: Request) {
   try {
