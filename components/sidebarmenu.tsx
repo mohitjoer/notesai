@@ -33,6 +33,7 @@ function SideBarMenu() {
   const { user } = useUser();
   const router = useRouter();
   const [chats, setChats] = useState<Chat[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
   const side = "left";
 
   useEffect(() => {
@@ -55,44 +56,56 @@ function SideBarMenu() {
   
   const handleChatClick = (chatId: string) => {
     router.push(`/chat/${chatId}`);
+    setIsOpen(false); 
+  };
+
+  const handleNewChat = async () => {
+    try {
+      await router.push('/');
+      setIsOpen(false);
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
   };
 
   return (
-    <div className="h-full border-r left-0 bg-gray-300 flex flex-col gap-4 p-4">    
-      <Sheet>
+    <div className="h-full">    
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild> 
-          <MenuIcon className="cursor-pointer"/>
+          <Button variant="ghost" size="icon" className="h-10 w-10">
+            <MenuIcon className="h-6 w-6" />
+          </Button>
         </SheetTrigger>
-        <SheetContent className="w-80" side={side}>
-          <SheetHeader>
+        <SheetContent side={side} className="w-[300px]">
+          <SheetHeader className="mb-4">
             <SheetTitle>Your Chats</SheetTitle>
             <SheetDescription>
               Past conversations
-              <br></br>
-              <Button  variant={"outline"} onClick={() => router.push('/')} className="w-1/2">
-              New Chat
-            </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleNewChat} 
+                className="mt-2 w-full"
+              >
+                New Chat
+              </Button>
             </SheetDescription>
           </SheetHeader>
 
-          <div>
-
-            
+          <div className="flex flex-col gap-2">
             {chats.map((chat) => (
-              <div key={chat._id} className='flex flex-col align-center items-center justify-center'>
-                <Button 
-                  variant="outline"
-                  onClick={() => handleChatClick(chat._id)}
-                  className=" mt-2 hover:bg-gray-100 w-6/7 rounded cursor-pointer"
-                >
-                  <h3 className="font-medium truncate">
-                    {chat.messages[0]?.content.slice(0, 30)}...
-                  </h3>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {new Date(chat.createdAt).toLocaleDateString()}
-                  </p>
-                </Button>
-              </div>
+              <Button 
+                key={chat._id}
+                variant="ghost"
+                onClick={() => handleChatClick(chat._id)}
+                className="flex flex-col items-start w-full p-3 hover:bg-gray-100"
+              >
+                <span className="font-medium text-sm truncate w-full">
+                  {chat.messages[0]?.content.slice(0, 30)}...
+                </span>
+                <span className="text-xs text-gray-500 mt-1">
+                  {new Date(chat.createdAt).toLocaleDateString()}
+                </span>
+              </Button>
             ))}
           </div>
         </SheetContent>
