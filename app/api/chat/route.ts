@@ -1,4 +1,4 @@
-import { createChat, getUserChats } from '@/services/chat-service';
+import { createChat, getUserChats } from '../../../services/chat-service';
 import { currentUser } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 

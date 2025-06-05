@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import Chat from "@/mongoDB/models/chat";
-import connectDB from "@/mongoDB/db";
+import Chat from "./../../../../mongoDB/models/chat";
+import connectDB from "./../.././../../mongoDB/db";
 import { currentUser } from "@clerk/nextjs/server";
 
 // GET /api/chat/[chatId]
